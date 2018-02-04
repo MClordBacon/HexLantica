@@ -6,7 +6,16 @@ namespace Assets.Scripts.MapGeneration
     public class Hex : MonoBehaviour
     {
         public Vector3 HexPos;
+        public Color HexColor;
+        private MeshRenderer _meshRenderer;
         public bool IsWalkable { get { return HexPos.y < 1; } }
+        public bool IsSelected { get; set; }
+
+
+        void Start()
+        {
+            _meshRenderer = GetComponentInChildren<MeshRenderer>();
+        }
 
         public Hex GetNeigbour(HexDir dir)
         {
@@ -27,6 +36,11 @@ namespace Assets.Scripts.MapGeneration
                 default:
                     throw new ArgumentOutOfRangeException("dir", dir, null);
             }
+        }
+
+        void Update()
+        {
+            _meshRenderer.material.color = IsSelected ? Color.green : HexColor;
         }
     }
 }

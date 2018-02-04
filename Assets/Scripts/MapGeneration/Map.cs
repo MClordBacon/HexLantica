@@ -10,6 +10,7 @@ namespace Assets.Scripts.MapGeneration
     {
         public static Map Instance;
         public GameObject BaseHex;
+        public GameObject BlockingHex;
         public bool StartGenerating;
         public int MapRadius;
         public int MapSlices;
@@ -93,11 +94,12 @@ namespace Assets.Scripts.MapGeneration
 
         public Hex PlaceHex(Vector3 pos)
         {
-            var obj = Instantiate(BaseHex);
+            var obj = Instantiate(pos.y >= 1 ? BlockingHex : BaseHex);
+            obj.transform.parent = transform;
             obj.transform.position = new Vector3(pos.x * hexSize * 2 + pos.z * hexSize, pos.y, pos.z * 1.5f * HexRadius);
             obj.transform.localScale = Vector3.one/HexRadius;
-            obj.GetComponentInChildren<MeshRenderer>().material.color = new Color(pos.y, pos.y, pos.y);
             var hex = obj.AddComponent<Hex>();
+            hex.HexColor = new Color(pos.y, pos.y, pos.y);
             hex.HexPos = pos;
             obj.gameObject.name = "Hex(" + (int) pos.x + "/" + (int) pos.z + ")";
             SetHex((int)pos.x, (int)pos.z, hex);

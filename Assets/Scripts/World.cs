@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.EngineLayer.AI;
+﻿using System.Collections.Generic;
+using Assets.Scripts.EngineLayer.AI;
 using Assets.Scripts.MapGeneration;
 using Assets.Scripts.Pathfinding.Utils;
 using UnityEngine;
@@ -7,9 +8,17 @@ namespace Assets.Scripts
 {
     public class World : MonoBehaviour
     {
+        public List<Unit> AllUnits;
+        public static World Instance;
+
+        void Awake()
+        {
+            Instance = this;
+        }
+
         void Start ()
         {
-            for (var i = 0; i < 20; i++)
+            for (var i = 0; i < 2; i++)
             {
                 SpawnUnit();
             }
@@ -20,16 +29,12 @@ namespace Assets.Scripts
             var obj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             obj.transform.localScale = Vector3.one * 0.3f;
             var start = FindWalkable();
-            var end = FindWalkable();
-            if (start == null || end == null)
-            {
-                Debug.Log("Couldnt find start or end nodes");
-                return;
-            }
             obj.transform.position = Map.Instance.GetHex(start.x, start.z).transform.position + Vector3.up * 2;
             var wc = obj.gameObject.AddComponent<WalkingController>();
+            var unit = obj.gameObject.AddComponent<Unit>();
+            unit.Movement = 2;
+            AllUnits.Add(unit);
             wc.MoveSpeed = 1;
-            wc.MoveTo(end);
         }
         
 

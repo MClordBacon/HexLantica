@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\micha\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_HexLantica.1313956030.00" t="ExcludeRecursive" />
+    <e p="D:\Developer\HexLantica" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="JetBrains" t="Include">
+              <e p="Unity3DRider.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="MapGeneration" t="Include">
+            <e p="Hex.cs" t="Include" />
+            <e p="Map.cs" t="Include" />
+          </e>
+          <e p="Pathfinding" t="Include">
+            <e p="Agents" t="Include">
+              <e p="MovingAgent.cs" t="Include" />
+              <e p="WalkingController.cs" t="Include" />
+            </e>
+            <e p="Graphs" t="Include">
+              <e p="Edge.cs" t="Include" />
+              <e p="Grid3D.cs" t="Include" />
+              <e p="Node.cs" t="Include" />
+              <e p="PathRegistry.cs" t="Include" />
+              <e p="SuperNode.cs" t="Include" />
+              <e p="T0Node.cs" t="Include" />
+              <e p="VoxelGraph.cs" t="Include" />
+            </e>
+            <e p="NodeBuilder.cs" t="Include" />
+            <e p="Pathfinder" t="Include">
+              <e p="AStar.cs" t="Include" />
+              <e p="Dijkstra.cs" t="Include" />
+              <e p="Path.cs" t="Include" />
+              <e p="VisitedNode.cs" t="Include" />
+            </e>
+            <e p="Utils" t="Include">
+              <e p="PriorityQueue.cs" t="Include" />
+              <e p="Promise.cs" t="Include" />
+              <e p="Vector3i.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Units" t="Include">
+            <e p="Unit.cs" t="Include" />
+          </e>
+          <e p="World.cs" t="Include" />
+        </e>
+      </e>
+      <e p="HexLantica.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>

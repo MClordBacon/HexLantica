@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Pathfinding.Graphs;
+using Assets.Scripts.Pathfinding.Utils;
 
 namespace Assets.Scripts.Pathfinding.Pathfinder
 {
@@ -34,6 +35,39 @@ namespace Assets.Scripts.Pathfinding.Pathfinder
                     }
                 }
             }
+        }
+        
+        public static List<Vector3I> GetArea(Vector3I center, int range, VoxelGraph voxelGraph)
+        {
+            var openQueue = new Utils.PriorityQueue<VisitedNode>();
+            var pathNodeMap = new Dictionary<Node, VisitedNode>();
+            var position = voxelGraph.GetClosestNode(center, 1);
+            pathNodeMap[position] = new VisitedNode(position, null, 0);
+            openQueue.Enqueue(pathNodeMap[position], 0);
+            var reachableHexes = new List<Vector3I>();
+            while (!openQueue.IsEmpty())
+            {
+                var current = openQueue.Dequeue();
+                reachableHexes.Add(current.GridNode.Position);
+                foreach (var neighbour in current.GridNode.GetNeighbours())
+                {
+                    if (neighbour.Length + current.GScore <= range)
+                    {
+                        var newNode = new VisitedNode(neighbour.To, current, neighbour.Length);
+                        if (pathNodeMap.ContainsKey(neighbour.To))
+                        {
+                            if(openQueue.Update(pathNodeMap[neighbour.To], pathNodeMap[neighbour.To].GScore, newNode, newNode.GScore))
+                                pathNodeMap[neighbour.To] = newNode;
+                        }
+                        else
+                        {
+                            openQueue.Enqueue(newNode, newNode.GScore);
+                            pathNodeMap[neighbour.To] = newNode;
+                        }
+                    }
+                }
+            }
+            return reachableHexes;
         }
 
         public static void FillNeigbours(SuperNode superNode, int gridSize)

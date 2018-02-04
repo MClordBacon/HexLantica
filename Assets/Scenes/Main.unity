@@ -206,8 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseHex: {fileID: 100000, guid: 60d91b694b555f9409b543bb51ecc2e1, type: 3}
+  BlockingHex: {fileID: 100000, guid: b59fce4ed7d2f4644bd2a56cf1bdb846, type: 3}
   StartGenerating: 1
-  MapRadius: 10
+  MapRadius: 6
   MapSlices: 1
   HexRadius: 1
 --- !u!4 &833820325
@@ -345,3 +346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b1670060f188a479a2c273330f54d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AllUnits: []
