@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts;
 using Assets.Scripts.MapGeneration;
 using Assets.Scripts.Pathfinding.Pathfinder;
@@ -12,7 +13,7 @@ public class Unit : MonoBehaviour
 
 	public int Movement;
 	private bool _selected;
-	private List<Vector3I> _reachableArea;
+	private List<VisitedNode> _reachableArea;
 
 	public bool Selected
 	{
@@ -50,21 +51,20 @@ public class Unit : MonoBehaviour
 
 	public void Select()
 	{
-		foreach (var unit in World.Instance.AllUnits)
+		if (World.Instance.ActiveUnit != null)
 		{
-			if (unit.Selected && unit != this)
-			{
-				unit.Selected = false;
-			}
+			World.Instance.ActiveUnit.Selected = false;
+			World.Instance.ResetActivePath();
 		}
+		World.Instance.ActiveUnit = this;
 		VisualizeMovement();
 	}
 
 	public void Deselect()
 	{
-		foreach (var hexVector3I in _reachableArea)
+		foreach (var visitedNode in _reachableArea)
 		{
-			Map.Instance.GetHex(hexVector3I.x, hexVector3I.z).IsSelected = false;
+			Map.Instance.GetHex(visitedNode.GridNode.Position.x, visitedNode.GridNode.Position.z).IsSelected = false;
 		}
 	}
 
@@ -73,9 +73,23 @@ public class Unit : MonoBehaviour
 		var hexPos = Map.Instance.ToHexPos(transform.position);
 		_reachableArea = Dijkstra.GetArea(hexPos, Movement, Map.Instance.PathfindingVoxelGraph);
 
-		foreach (var hexVector3I in _reachableArea)
+		foreach (var visitedNode in _reachableArea)
 		{
-			Map.Instance.GetHex(hexVector3I.x, hexVector3I.z).IsSelected = true;
+			Map.Instance.GetHex(visitedNode.GridNode.Position.x, visitedNode.GridNode.Position.z).IsSelected = true;
+		}
+	}
+
+	public void ShowPreviewTo(Hex hex)
+	{
+		var node = _reachableArea.FirstOrDefault(vn => vn.GridNode.Position.x == (int) hex.HexPos.x && vn.GridNode.Position.z == (int)hex.HexPos.z);
+
+		while (node.Prev != null)
+		{
+
+			var prevHex = Map.Instance.GetHex(node.GridNode.Position.x, node.GridNode.Position.z);
+			prevHex.IsPath = true;
+				
+			node = node.Prev;
 		}
 	}
 }

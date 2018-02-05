@@ -9,6 +9,8 @@ namespace Assets.Scripts
     public class World : MonoBehaviour
     {
         public List<Unit> AllUnits;
+        public Unit ActiveUnit;
+        public List<Hex> ActivePath;
         public static World Instance;
 
         void Awake()
@@ -52,6 +54,14 @@ namespace Assets.Scripts
         }
 
         void Update () {
+        }
+
+        public void ResetActivePath()
+        {
+            foreach (var hex in ActivePath)
+            {
+                hex.IsPath = false;
+            }
         }
     }
 }

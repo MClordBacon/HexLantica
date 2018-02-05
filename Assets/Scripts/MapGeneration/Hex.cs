@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 
 namespace Assets.Scripts.MapGeneration
 {
@@ -10,6 +12,8 @@ namespace Assets.Scripts.MapGeneration
         private MeshRenderer _meshRenderer;
         public bool IsWalkable { get { return HexPos.y < 1; } }
         public bool IsSelected { get; set; }
+        public bool IsActivated { get; set; }
+        public bool IsPath { get; set; }
 
 
         void Start()
@@ -38,9 +42,37 @@ namespace Assets.Scripts.MapGeneration
             }
         }
 
+        void OnMouseDown()
+        {
+            if (!IsSelected)
+                return;
+            
+            IsActivated = true;
+            OpenUIMenu();
+            World.Instance.ActiveUnit.ShowPreviewTo(this);
+        }
+
+        private void OpenUIMenu()
+        {
+            return;
+        }
+
         void Update()
         {
-            _meshRenderer.material.color = IsSelected ? Color.green : HexColor;
+            if (IsPath)
+            {
+                _meshRenderer.material.color = Color.blue;
+                World.Instance.ActivePath.Add(this);
+            }
+            else if (IsSelected)
+            {
+                _meshRenderer.material.color = Color.green;
+            }
+            else
+            {
+                _meshRenderer.material.color = HexColor;
+            }
+            //_meshRenderer.material.color = IsSelected ? Color.green : (IsPath ? Color.blue : HexColor);
         }
     }
 }

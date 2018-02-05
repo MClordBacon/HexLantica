@@ -37,18 +37,18 @@ namespace Assets.Scripts.Pathfinding.Pathfinder
             }
         }
         
-        public static List<Vector3I> GetArea(Vector3I center, int range, VoxelGraph voxelGraph)
+        public static List<VisitedNode> GetArea(Vector3I center, int range, VoxelGraph voxelGraph)
         {
             var openQueue = new Utils.PriorityQueue<VisitedNode>();
             var pathNodeMap = new Dictionary<Node, VisitedNode>();
             var position = voxelGraph.GetClosestNode(center, 1);
             pathNodeMap[position] = new VisitedNode(position, null, 0);
             openQueue.Enqueue(pathNodeMap[position], 0);
-            var reachableHexes = new List<Vector3I>();
+            var reachableHexes = new List<VisitedNode>();
             while (!openQueue.IsEmpty())
             {
                 var current = openQueue.Dequeue();
-                reachableHexes.Add(current.GridNode.Position);
+                reachableHexes.Add(current);
                 foreach (var neighbour in current.GridNode.GetNeighbours())
                 {
                     if (neighbour.Length + current.GScore <= range)
