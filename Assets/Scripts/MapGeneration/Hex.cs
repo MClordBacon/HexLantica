@@ -49,6 +49,7 @@ namespace Assets.Scripts.MapGeneration
             
             IsActivated = true;
             OpenUIMenu();
+            World.Instance.ResetActivePath();
             World.Instance.ActiveUnit.ShowPreviewTo(this);
         }
 
@@ -62,7 +63,6 @@ namespace Assets.Scripts.MapGeneration
             if (IsPath)
             {
                 _meshRenderer.material.color = Color.blue;
-                World.Instance.ActivePath.Add(this);
             }
             else if (IsSelected)
             {

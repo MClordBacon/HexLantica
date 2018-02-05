@@ -20,7 +20,7 @@ namespace Assets.Scripts
 
         void Start ()
         {
-            for (var i = 0; i < 2; i++)
+            for (var i = 0; i < 1; i++)
             {
                 SpawnUnit();
             }

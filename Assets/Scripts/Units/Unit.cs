@@ -38,8 +38,13 @@ public class Unit : MonoBehaviour
 
 	}
 
+	public Vector3I	GetPosition()
+	{
+		return Map.Instance.ToHexPos(transform.position);
+	}
 	void OnMouseDown()
 	{
+		
 		Selected = !Selected;
 	}
 
@@ -66,11 +71,12 @@ public class Unit : MonoBehaviour
 		{
 			Map.Instance.GetHex(visitedNode.GridNode.Position.x, visitedNode.GridNode.Position.z).IsSelected = false;
 		}
+		World.Instance.ResetActivePath();
 	}
 
 	private void VisualizeMovement()
 	{
-		var hexPos = Map.Instance.ToHexPos(transform.position);
+		var hexPos = GetPosition();
 		_reachableArea = Dijkstra.GetArea(hexPos, Movement, Map.Instance.PathfindingVoxelGraph);
 
 		foreach (var visitedNode in _reachableArea)
@@ -88,8 +94,13 @@ public class Unit : MonoBehaviour
 
 			var prevHex = Map.Instance.GetHex(node.GridNode.Position.x, node.GridNode.Position.z);
 			prevHex.IsPath = true;
+			World.Instance.ActivePath.Add(prevHex);
 				
 			node = node.Prev;
 		}
+
+		var unitHex = Map.Instance.GetHex(GetPosition().x, GetPosition().z);
+		unitHex.IsPath = true;
+		World.Instance.ActivePath.Add(unitHex);
 	}
 }
