@@ -118,7 +118,8 @@ namespace Assets.Scripts.MapGeneration
             {
                 foreach (var zk in Hexes[xk].Keys)
                 {
-                    var dist = Vector3.Distance(Hexes[xk][zk].transform.position, transformPosition);
+                    //var dist = Vector3.Distance(Hexes[xk][zk].transform.position, transformPosition);
+                    var dist = FlatDist(Hexes[xk][zk].transform.position, transformPosition);
                     if (closestHex == null || dist < closestDist)
                     {
                         closestHex = Hexes[xk][zk];
@@ -127,6 +128,12 @@ namespace Assets.Scripts.MapGeneration
                 }
             }
             return closestHex.HexPos;
+        }
+
+        private float FlatDist(Vector3 transformPosition, Vector3 vector3)
+        {
+            var dist = transformPosition - vector3;
+            return Mathf.Sqrt(dist.x * dist.x + dist.z * dist.z);
         }
     }
 

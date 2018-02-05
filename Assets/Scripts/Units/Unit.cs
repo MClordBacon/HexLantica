@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
 		set
 		{
 			_selected = value;
-			if (_selected)
+			if (value)
 			{
 				Select();
 			}
@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour
 
 	public void Select()
 	{
-		if (World.Instance.ActiveUnit != null)
+		if (World.Instance.ActiveUnit != null && World.Instance.ActiveUnit != this)
 		{
 			World.Instance.ActiveUnit.Selected = false;
 			World.Instance.ResetActivePath();
@@ -99,7 +99,8 @@ public class Unit : MonoBehaviour
 			node = node.Prev;
 		}
 
-		var unitHex = Map.Instance.GetHex(GetPosition().x, GetPosition().z);
+		var pos = GetPosition();
+		var unitHex = Map.Instance.GetHex(pos.x, pos.z);
 		unitHex.IsPath = true;
 		World.Instance.ActivePath.Add(unitHex);
 	}
